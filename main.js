@@ -1,7 +1,9 @@
-const app = Vue.create.App ({
-    data: function(){
+const app = Vue.createApp ({
+    data (){
         return {
-            product: 'Socks'
+            product: 'Socks',
+            image: './assets/images/socks_green.jpg',
+            URL: 'http://localhost:3000/api/socks',
         }
     }
 })
