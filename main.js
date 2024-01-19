@@ -9,8 +9,8 @@ const app = Vue.createApp ({
             onSale: true,
             details: ['50% cotton','30% wool', '20% polyester'],  
             variants: [
-                {id: 2234, color: 'green'},
-                {id: 2235, color: 'blue'},
+                {id: 2234, color: 'green', image:'./assets/images/socks_green.jpg'},
+                {id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg'},
             ],
             sizes: [
                 {id: 2236, size: 'S'},
@@ -18,5 +18,16 @@ const app = Vue.createApp ({
                 {id: 2238, size: 'L'},
                 {id: 2239, size: 'XL'},
             ]      }
+    },
+    methods: {
+        addToCart(){
+            this.cart++
+        },
+        removeFromCart(){
+            this.cart--
+        },
+        updateImage(variantImage){
+                 this.image = variantImage;   
+    },
     }
 })
