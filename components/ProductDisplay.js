@@ -3,7 +3,8 @@ app.component('product-display', {
         premium: {
             type: Boolean,
             required: true,
-        }
+        },
+       
     },
     template:
     /*html*/
