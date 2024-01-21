@@ -12,22 +12,33 @@ app.component('product-display', {
     <div class="product-container">
       <h1>{{ title }}</h1>
     <div class="product-image">
-      <img :class="{'out-of-stock-img': !inStock}" v-bind:src="image">
+      <img  v-bind:src="image">
+      <!--  :class="{'out-of-stock-img': !inStock}"-->
       <!--shorthand for v-bind
           <img:scr="image">-->
     </div>
     <div class = "product-info">
     <a :href="URL">Vue Mastery</a>
     </div>
-    <div class="product-info">
+     
+     <div class="product-info">
       <h2>{{ Sale }}</h2>
-      <p v-if="inventory > 10">In Stock</p> 
-      <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!</p>
+      <p v-if="quantity > 10">In Stock</p> 
+      <p v-else-if="quantity <= 10 && quantity > 0">Almost sold out!</p>
       <p v-else>Out of Stock</p>
+ <!--CAN ADD CODE BELOW INSIDE <BUTTON> TO DISABLE ADD TO CART BUTTON
+             :disabled="!inStock"
+             :class="{ disabledButton: !inStock}" -->
+      <button
+      class="button"
+      v-on:click="addToCart">
+      Add to Cart
+     </button> 
+    
+     <button id = "removeButton"class="button"v-on:click="removeFromCart">Remove Item</button>
+
       <p>Shipping: {{ shipping }}</p>
-      <ul>
-        <li v-for="detail in details">{{ detail }}</li>
-      </ul>
+
       <div v-for="(variant, index) in variants"
            :key="variant.id"
            v-on:mouseover="updateVariant(index)"
@@ -44,10 +55,9 @@ data (){
             URL: 'http://localhost:3000/api/socks',
             onSale: true,
             onSaleSign: 'On Sale',
-            details: ['50% cotton','30% wool', '20% polyester'],  
             variants: [
                 {id: 2234, color: 'green', image:'./assets/images/socks_green.jpg', quantity: 50},
-                {id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0},
+                {id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity:50},
             ],
             sizes: [
                 {id: 2236, size: 'S'},
@@ -58,15 +68,15 @@ data (){
     },
     methods: {
         addToCart(){
-            this.cart++
+           this.$emit('add-to-cart', this.variants[this.selectedVariant].id)
         },
         removeFromCart(){
-            this.cart--
+            this.$emit('remove-from-cart', this.variants[this.selectedVariant].id)
         },
         updateVariant(index){
-                 this.selectedVariant = index;   
-                 
+                 this.selectedVariant = index;           
     },
+    
    
     },
     computed: {
